@@ -1,14 +1,14 @@
 import re
 import subprocess
 
-FREQ_OFFSET = 15000
+FREQ_OFFSET = 7500
 MEM_OFFSET = 1000
 PATT = r"nvidiaInspector.exe \"-setVoltagePoints:(.*)\|\""
-FMT_VFPOINT = "nvidiaInspector.exe \"-setVoltagePoints:{}|\"\n"
-FMT_MEMORY = "nvidiaInspector.exe -setMemoryClockOffset:0,0,{}\n"
+FMT_VFPOINT = "nvidiaInspector.exe -setVoltagePoints:{}"
+FMT_MEMORY = "nvidiaInspector.exe -setMemoryClockOffset:0,0,{}"
 
 subprocess.run(["nvidiaInspector.exe", "-dumpVoltagePoints:0"], check=True).check_returncode()
-with open("setVoltagePoints.cmd", "r", encoding="utf-8") as f:
+with open("setVoltagePoints.bat", "r", encoding="utf-8") as f:
     raw_cmd = f.readline().strip()
 
 voltage_points = re.findall(PATT, raw_cmd)[0].split("|")
